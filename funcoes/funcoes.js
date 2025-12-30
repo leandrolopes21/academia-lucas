@@ -124,6 +124,26 @@ async function salvarHistorico(dia, treino) {
     try {
         const dataAtual = new Date().toLocaleDateString('pt-BR');
         console.log('Tentando salvar:', { data: dataAtual, dia, treino });
+
+        // Verificar se já existe uma entrada para a data atual
+        const { data: existing, error: selectError } = await window.supabase
+            .from('historicoTreinos')
+            .select('*')
+            .eq('data', dataAtual);
+
+        if (selectError) {
+            console.error('Erro ao verificar duplicata:', selectError);
+            alert('Erro ao verificar histórico: ' + selectError.message);
+            return;
+        }
+
+        if (existing && existing.length > 0) {
+            console.log('Treino já salvo para hoje:', existing);
+            alert('Treino de hoje já foi salvo!');
+            return;
+        }
+
+        // Se não existe, inserir
         const { data, error } = await window.supabase.from('historicoTreinos').insert([{ data: dataAtual, dia, treino }]);
         if (error) {
             console.error('Erro ao salvar:', error);
