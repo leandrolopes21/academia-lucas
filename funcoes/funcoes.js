@@ -144,6 +144,8 @@ async function salvarHistorico(dia, treino) {
             return;
         }
 
+        console.log('Nenhuma entrada encontrada, inserindo...');
+
         // Se não existe, inserir
         const { data, error } = await window.supabase.from('historicoTreinos').insert([{ data: dataAtual, dia, treino }]);
         if (error) {
