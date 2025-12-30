@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="estilo.css">
     
     <!-- Supabase SDK (banco de dados na nuvem) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
         const supabaseUrl = 'https://tvvxxdbdxctnvsfwfwdz.supabase.co'; // Substitua pela URL do seu projeto Supabase
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2dnh4ZGJkeGN0bnZzZndmd2R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxMDk0MjcsImV4cCI6MjA4MjY4NTQyN30.LxMWBBjDBky1GcgI2ZdTqtlw9-QC4s5WNqJGHktJVag'; // Substitua pela chave anônima do Supabase
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        const supabase = createClient(supabaseUrl, supabaseKey);
         window.supabase = supabase;
+        console.log('Supabase inicializado:', supabase);
     </script>
 
 </head>
