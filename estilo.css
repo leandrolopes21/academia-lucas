@@ -23,7 +23,9 @@
 body {
     background: linear-gradient(135deg, var(--cor_fundo_azul) 0%, var(--cor_fundo_sugestao) 100%);
     min-height: 100vh;
+
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: var(--cor_preto);
@@ -127,6 +129,22 @@ body {
 .exibe-treino, .exibe-historico-feito {
     font-style: italic;
     color: var(--cor_accent);
+}
+
+.rodape {
+    background: var(--cor_fundo_azul);
+    color: var(--cor_branco);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-width: 412px;
+    width: 90%;
+    margin: 20px;
+    text-align: center;
+}
+
+.rodape p {
+    padding: 5px;
 }
 
 /* Responsividade */
