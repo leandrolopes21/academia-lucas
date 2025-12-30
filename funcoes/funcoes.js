@@ -39,7 +39,7 @@ function treinosLucas() {
             treino = 'Praticar 50 polichinelos!';
             break;
         case 'Quinta-feira':
-            treino = 'Praticar 50 agaxamentos!';
+            treino = 'Praticar 50 agachamentos!';
             break;
         case 'Sexta-feira':
             treino = 'Praticar 25 abdominais e 25 flexões!';
@@ -90,39 +90,25 @@ function limparTelaHistorico() {
 }
 
 async function marcarComoFeito() {
+    botaoFeito.disabled = true;
+    botaoFeito.style.backgroundColor = '#474747';
+
     // Salva o treino atual no histórico
     await salvarHistorico(retornaDiaDaSemana(), treinosLucas());
 
     // Limpa a exibição
     limpar();
-
-    botaoFeito.disabled = true;
-    botaoFeito.style.backgroundColor = '#474747';
 }
-
-/*
-// Versão local
-function salvarHistorico(dia, treino) {
-    let historico = JSON.parse(localStorage.getItem('historicoTreinos')) || [];
-    let dataAtual = new Date().toLocaleDateString('pt-BR');
-
-    // Verifica se já existe uma entrada para o dia atual
-    let jaSalvo = historico.some(item => item.data === dataAtual);
-
-    if (!jaSalvo) {
-        historico.push({ data: dataAtual, dia: dia, treino: treino });
-        localStorage.setItem('historicoTreinos', JSON.stringify(historico));
-        alert('Treino salvo no histórico!');
-    } else {
-        alert('Treino de hoje já foi salvo!');
-    }
-}
-*/
 
 // Versão para Supabase (uso na nuvem):
 async function salvarHistorico(dia, treino) {
     try {
-        const dataAtual = new Date().toLocaleDateString('pt-BR');
+        // Gera a data no formato YYYY-MM-DD respeitando o fuso horário local
+        const dateObj = new Date();
+        const ano = dateObj.getFullYear();
+        const mes = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const diaMes = String(dateObj.getDate()).padStart(2, '0');
+        const dataAtual = `${ano}-${mes}-${diaMes}`;
         console.log('Tentando salvar:', { data: dataAtual, dia, treino });
 
         // Verificar se já existe uma entrada para a data atual
@@ -161,30 +147,11 @@ async function salvarHistorico(dia, treino) {
     }
 }
 
-/*
-// Versão local
-function exibirHistorico() {
-    let historico = JSON.parse(localStorage.getItem('historicoTreinos')) || [];
-    let exibeHistorico = document.getElementById('exibe-historico');
-    let exibeHistoricoFeito = document.getElementById('exibe-historico-feito');
-
-    if (historico.length === 0) {
-        alert('Histórico vazio');
-        return;
-    } else if (historico.length > 0) {
-        botaoLimparHistorico.disabled = false;
-    }
-
-    exibeHistorico.innerHTML = 'Histórico de Treinos:';
-    exibeHistoricoFeito.innerHTML = historico.map(item => `${item.data} (${item.dia}): ${item.treino} - OK!`).join('<br>');
-}
-*/
-
 async function limparHistorico() {
     if (confirm('Tem certeza que deseja limpar todo o histórico de treinos?')) {
         try {
             console.log('Tentando limpar histórico...');
-            const { data, error } = await window.supabase.from('historicoTreinos').delete().neq('id', 0); // Deleta todos os registros
+            const { data, error } = await window.supabase.from('historicoTreinos').delete().not('data', 'is', null); // Deleta todos os registros
             console.log('Resultado do delete:', { data, error });
             if (error) {
                 console.error('Erro ao limpar histórico:', error);
@@ -223,8 +190,17 @@ async function exibirHistorico() {
             return;
         }
 
+        botaoLimparHistorico.disabled = false;
         exibeHistorico.innerHTML = 'Histórico de Treinos:';
-        exibeHistoricoFeito.innerHTML = historico.map(item => `${item.data} (${item.dia}): ${item.treino} - OK!`).join('<br>');
+        exibeHistoricoFeito.innerHTML = historico.map(item => {
+            let dataFormatada = item.data;
+            // Se a data estiver em formato YYYY-MM-DD, converte para DD/MM/YYYY para exibir bonito
+            if (dataFormatada && /^\d{4}-\d{2}-\d{2}$/.test(dataFormatada)) {
+                const [ano, mes, dia] = dataFormatada.split('-');
+                dataFormatada = `${dia}/${mes}/${ano}`;
+            }
+            return `${dataFormatada} (${item.dia}): ${item.treino} - OK!`;
+        }).join('<br>');
     } catch (err) {
         console.error('Erro inesperado ao carregar histórico:', err.message, err.stack);
         alert('Erro inesperado ao carregar histórico: ' + err.message);
