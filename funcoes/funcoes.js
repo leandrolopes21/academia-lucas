@@ -137,6 +137,7 @@ async function salvarHistorico(dia, treino) {
             return;
         }
 
+        console.log('Existing entries for data:', dataAtual, existing);
         if (existing && existing.length > 0) {
             console.log('Treino já salvo para hoje:', existing);
             alert('Treino de hoje já foi salvo!');
