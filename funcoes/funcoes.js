@@ -183,6 +183,7 @@ async function limparHistorico() {
         try {
             console.log('Tentando limpar histórico...');
             const { data, error } = await window.supabase.from('historicoTreinos').delete().neq('id', 0); // Deleta todos os registros
+            console.log('Resultado do delete:', { data, error });
             if (error) {
                 console.error('Erro ao limpar histórico:', error);
                 alert('Erro ao limpar histórico: ' + error.message);
