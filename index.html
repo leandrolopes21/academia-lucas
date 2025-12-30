@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia do Lucas</title>
+    <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="estilo.css">
+    
+    <!-- Supabase SDK (banco de dados na nuvem) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://tvvxxdbdxctnvsfwfwdz.supabase.co'; // Substitua pela URL do seu projeto Supabase
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2dnh4ZGJkeGN0bnZzZndmd2R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcxMDk0MjcsImV4cCI6MjA4MjY4NTQyN30.LxMWBBjDBky1GcgI2ZdTqtlw9-QC4s5WNqJGHktJVag'; // Substitua pela chave anônima do Supabase
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        window.supabase = supabase;
+    </script>
+
+</head>
+<body>
+
+    <main id="principal" class="principal">
+
+        <header id="secao-cabecalho" class="secao-cabecalho">
+            <div id="conteiner-cabecalho" class="conteiner-cabecalho">
+                <h1>Academia do Lucas</h1>
+            </div>
+        </header>
+
+        <section id="secao-conteudo" class="secao-conteudo">
+
+            <div id="conteiner-texto" class="conteiner-texto">
+                <h2>Treinos da Semana</h2>
+            </div>
+
+            <div id="conteiner-botoes" class="conteiner-botoes">
+                <button id="btnTreino" class="btnTreino">Treino do dia</button>
+                <button id="btnFeito" class="btnFeito">Feito</button>
+                <button id="btnHistorico" class="btnHistorico">Histórico</button>
+                <button id="btnLimparHistorico" class="btnLimparHistorico">Limpar Histórico</button>
+            </div>
+
+            <div id="conteiner-conteudo" class="conteiner-conteudo">
+
+                <div id="conteiner-conteudo-data-treino" class="conteiner-conteudo-data-treino">
+                    <p id="data-atual" class="data-atual">
+                        <!-- Exibe o dia atual da semana -->
+                    </p>
+                    <p id="exibe-treino" class="exibe-treino">
+                        <!-- Exibe o treino correspondente ao dia -->
+                    </p>
+                    <p id="exibe-historico" class="exibe-historico">
+                        <!-- Exibe o histórico de treinos salvos -->
+                    </p>
+                    <p id="exibe-historico-feito" class="exibe-historico-feito">
+                        <!-- Exibe o histórico de treinos salvos -->
+                    </p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="funcoes/funcoes.js"></script>
+    
+</body>
+</html>
