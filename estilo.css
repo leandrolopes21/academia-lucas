@@ -148,7 +148,7 @@ body {
 }
 
 /* Responsividade */
-@media (max-width: 412px) {
+@media (max-width: 768px) {
     .conteiner-cabecalho h1 {
         font-size: 2rem;
     }
