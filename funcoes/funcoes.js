@@ -45,10 +45,10 @@ function treinosLucas() {
             treino = 'Praticar 25 abdominais e 25 flexões!';
             break;
         case 'Sábado':
-            treino = 'Dia de folga!';
+            treino = 'descansar!';
             break;
         case 'Domingo':
-            treino = 'Dia de folga!';
+            treino = 'descansar!';
             break;
 
         default:
